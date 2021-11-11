@@ -41,7 +41,21 @@ const gameControl = (()=>{
     
     //Computer Module
     const computer = (()=>{
-    
+        
+        const randomMove = ()=>{
+            return Math.floor(Math.random()*10)
+        }
+
+        //Will include logic for MIN MAX Algorithm later on
+        const computerChoice = ()=>{
+            return randomMove()
+        }
+
+        return {
+            randomMove,
+            computerChoice,
+        }
+
     })();
     
     //Game Module
@@ -50,6 +64,6 @@ const gameControl = (()=>{
     })();
 
     //testing
-
+    console.log(computer.computerChoice())
 
 })();
