@@ -7,12 +7,12 @@ const gameControl = (()=>{
     //Game Module
     const game = (()=>{
 
-        //Game Board Module
+        //Game Board Module//------------------------------------------------
         const gameBoard = (()=>{ 
-            let arr = [1,2,3,4,5,6,7,8,9];
+            let arr = ["","","","","","","","",""];
         
             const resetArray = ()=>{
-                arr = [];
+                arr = ["","","","","","","","",""];
 
                 arrayNodes.forEach((node)=>{
                     node.innerText = "";
@@ -31,15 +31,25 @@ const gameControl = (()=>{
                 displayArray();
             }
 
+            const moveIsLegal = (moveIndex)=>{
+                return (arr[moveIndex] === "")
+            }
+
+            const gameOver = ()=>{
+
+            }
+
             return {
                 resetArray,
                 displayArray,
                 getMove,
+                moveIsLegal,
+                gameOver,
             }
         
-        })();
+        })();//-----------------------------------------------------------------
 
-        //Player Module
+        //Player Module---------------------------------------------------------
         const player = (()=>{
             let myChoice;
 
@@ -52,8 +62,10 @@ const gameControl = (()=>{
 
             const _onNodeClick = (e)=>{
                 myChoice = e.target.id.valueOf()
-                e.target.innerText = "X"
-                _disablePlayerChoice()
+                if(gameBoard.moveIsLegal(myChoice)){
+                    gameBoard.getMove(myChoice,"X")
+                    _disablePlayerChoice()
+                }
             }
             const _enablePlayerChoice = ()=>{
                 arrayNodes.forEach((node)=>{
@@ -64,18 +76,15 @@ const gameControl = (()=>{
             const getMove = ()=>{
                 myChoice = -1;
                 _enablePlayerChoice()
-                //while player hasnt made a move, wait
-                // while(myChoice = -1){}
-                // return myChoice;
             }
 
             return {
                 getMove,
             }
 
-        })();
+        })();//----------------------------------------------------------------
         
-        //Computer Module
+        //Computer Module------------------------------------------------------
         const computer = (()=>{
             
             const randomMove = ()=>{
@@ -84,7 +93,11 @@ const gameControl = (()=>{
 
             //Will include logic for MIN MAX Algorithm later on
             const getMove = ()=>{
-                let myMove = randomMove()
+                let myMove;
+                do {
+                    myMove = randomMove()
+                } while (gameBoard.moveIsLegal(myMove) == false)
+                gameBoard.getMove(myMove,"O")
                 computerMadeAMove(myMove)
             }
 
@@ -93,35 +106,25 @@ const gameControl = (()=>{
                 getMove,
             }
 
-        })();
-
-        const gameOver = ()=>{
-            return false
-        }
-
-        let playerChoice;
-        let computerChoice;
+        })(); //--------------------------------------------------------------
 
         const playerMadeAMove = (choice)=>{
-            if (gameOver()){
+            if (gameBoard.gameOver()){
 
             }else{
                 //prompt computer for move
                 setTimeout(() => {
-                    playerChoice = choice;
                     computer.getMove()
                 }, 500);
             }
             
         }
-
         const computerMadeAMove = (choice)=>{
-            if (gameOver()){
+            if (gameBoard.gameOver()){
 
             }else{
                 //prompt player for move
-                computerChoice = choice
-                console.log("computer made a move: " + computerChoice)
+                console.log(choice)
                 player.getMove()
             }
             
