@@ -1,7 +1,8 @@
 //Main Module
 const gameControl = (()=>{
     const arrayNodes = document.querySelectorAll('.column')
-
+    const playAgainBtn = document.querySelector('button')
+    const messageA = document.querySelector('#message')
 
     
     //Game Module
@@ -149,23 +150,32 @@ const gameControl = (()=>{
             
         }
 
+        const startAGame = ()=>{
+            gameBoard.resetArray()
+            player.getMove()
+        }
+
         return {
-            startAGame : player.getMove
+            startAGame,
         }
 
     })();
 
     const gameEnd = (winnerSymbol)=>{
         if ( winnerSymbol == "tie") {
-            console.log("Tie game!")
+            messageA.innerText= ("Tie game!")
         }else if ( winnerSymbol == "X"){
-            console.log("Player won!")
+            messageA.innerText= ("You won!")
         }else {
-            console.log("Computer won!")
+            messageA.innerText= ("You suck!")
         }
     }
 
-    //testing
+    playAgainBtn.addEventListener("click", ()=>{
+        messageA.innerText = ""
+        game.startAGame()
+    })
+
     game.startAGame()
 
 })();
