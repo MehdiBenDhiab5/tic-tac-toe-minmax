@@ -1,8 +1,9 @@
 *{
     margin: 0px;
+    font-family: sans-serif;
 }
 body{
-    background-color: blanchedalmond;
+    background-color: whitesmoke;
 
     height: 100vh;
     width: 100vw;
@@ -23,7 +24,12 @@ body{
     flex: 1;
 }
 .column{
-    background-color: rgb(166, 175, 182);
+    background-color: rgb(216, 191, 193);
     flex: 1;
     margin: 2px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 120px;
 }

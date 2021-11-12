@@ -144,7 +144,6 @@ const gameControl = (()=>{
                 gameEnd(gameBoard.gameOver())
             }else{
                 //prompt player for move
-                console.log(choice)
                 player.getMove()
             }
             
@@ -158,11 +157,11 @@ const gameControl = (()=>{
 
     const gameEnd = (winnerSymbol)=>{
         if ( winnerSymbol == "tie") {
-            alert ("Tie game!")
+            console.log("Tie game!")
         }else if ( winnerSymbol == "X"){
-            alert ("Player won!")
+            console.log("Player won!")
         }else {
-            alert ("Computer won!")
+            console.log("Computer won!")
         }
     }
 
