@@ -9,10 +9,10 @@ const gameControl = (()=>{
 
         //Game Board Module//------------------------------------------------
         const gameBoard = (()=>{ 
-            let arr = ["","","","","","","","",""];
+            let arr = [3,3,3,3,3,3,3,3,3];
         
             const resetArray = ()=>{
-                arr = ["","","","","","","","",""];
+                arr = [3,3,3,3,3,3,3,3,3];
 
                 arrayNodes.forEach((node)=>{
                     node.innerText = "";
@@ -22,7 +22,9 @@ const gameControl = (()=>{
             const displayArray = ()=>{
 
                 arrayNodes.forEach((node,index)=>{
-                    node.innerText = arr[index];
+                    if (arr[index]!=3){
+                        node.innerText = arr[index];    
+                    }
                 })
             }
 
@@ -32,11 +34,29 @@ const gameControl = (()=>{
             }
 
             const moveIsLegal = (moveIndex)=>{
-                return (arr[moveIndex] === "")
+                return (arr[moveIndex] === 3)
             }
 
             const gameOver = ()=>{
+                for (let i=0; i<3; i++){
+                    if ( arr[3*i] !=3 && (arr[3*i] == arr[3*i+1]) && ( arr[3*i+1] == arr[3*i+2])){
+                        return arr[3*i]
+                    }
+                    if ( arr[i] !=3 && (arr[i] == arr[i+3]) && (arr[i+3] == arr[i+6])){
+                        return arr[i]
+                    }
+                }
+                if ( arr[0] !=3 && (arr[0] == arr[4]) && (arr[4] == arr[8])){
+                    return arr[0]
+                }
+                if ( arr[2] !=3 && (arr[2] == arr[4]) && (arr[4] == arr[6])){
+                    return arr[2]
+                }
 
+                if ( arr.find(elem => elem === 3) == undefined ) {
+                    return "tie"
+                }
+                return -1
             }
 
             return {
@@ -109,8 +129,8 @@ const gameControl = (()=>{
         })(); //--------------------------------------------------------------
 
         const playerMadeAMove = (choice)=>{
-            if (gameBoard.gameOver()){
-
+            if (gameBoard.gameOver() != -1){
+                gameEnd(gameBoard.gameOver())
             }else{
                 //prompt computer for move
                 setTimeout(() => {
@@ -120,8 +140,8 @@ const gameControl = (()=>{
             
         }
         const computerMadeAMove = (choice)=>{
-            if (gameBoard.gameOver()){
-
+            if (gameBoard.gameOver() != -1){
+                gameEnd(gameBoard.gameOver())
             }else{
                 //prompt player for move
                 console.log(choice)
@@ -130,17 +150,23 @@ const gameControl = (()=>{
             
         }
 
-        const playAGame = ()=>{
-
-        }
-
         return {
             startAGame : player.getMove
         }
 
     })();
 
+    const gameEnd = (winnerSymbol)=>{
+        if ( winnerSymbol == "tie") {
+            alert ("Tie game!")
+        }else if ( winnerSymbol == "X"){
+            alert ("Player won!")
+        }else {
+            alert ("Computer won!")
+        }
+    }
+
     //testing
     game.startAGame()
-    
+
 })();
