@@ -88,6 +88,7 @@ const gameControl = (()=>{
                     _disablePlayerChoice()
                 }
             }
+            
             const _enablePlayerChoice = ()=>{
                 arrayNodes.forEach((node)=>{
                     node.addEventListener("click",_onNodeClick)
@@ -138,8 +139,8 @@ const gameControl = (()=>{
                     computer.getMove()
                 }, 500);
             }
-            
         }
+
         const computerMadeAMove = (choice)=>{
             if (gameBoard.gameOver() != -1){
                 gameEnd(gameBoard.gameOver())
@@ -147,7 +148,6 @@ const gameControl = (()=>{
                 //prompt player for move
                 player.getMove()
             }
-            
         }
 
         const startAGame = ()=>{
