@@ -150,18 +150,30 @@ const gameControl = (()=>{
                 if (gameOver(CurrArrayState) == "tie") {
                     return 0
                 }else if (gameOver(CurrArrayState) == "X"){
-                    return -10
+                    let finalValue = -10;
+                    CurrArrayState.forEach((elem)=>{
+                        if(elem == 3){
+                            finalValue = finalValue - 10
+                        }
+                    })
+                    return finalValue
                 }else if (gameOver(CurrArrayState) == "O"){
-                    return 10
+                    let finalValue = 10;
+                    CurrArrayState.forEach((elem)=>{
+                        if(elem == 3){
+                            finalValue = finalValue + 10
+                        }
+                    })
+                    return finalValue
                 //else if game hasnt ended yet
                 }else {
                     let testArr;
                     let bestValue;
                     //initialize bestValue depending on the player, so we can compare it
                     if (player == "X") {
-                        bestValue = 10
+                        bestValue = 999
                     }else {
-                        bestValue = -10
+                        bestValue = -999
                     }
                     //for every element in the array
                     for (let i=0; i<CurrArrayState.length; i++){
@@ -185,6 +197,7 @@ const gameControl = (()=>{
                                     bestValue = moveValue
                                 }
                             }
+                            //reset array for next iteration
                             testArr[i] = 3
                         }
                     }
@@ -201,7 +214,7 @@ const gameControl = (()=>{
                 //initialize best value and best move
                 //best move being an index that we will return at the end of the function
                 //best value being 0 or 10 or -10 depending on who won
-                let bestValue = -20
+                let bestValue = -999
                 let bestMove;
                 let minmaxResults;
 
@@ -226,10 +239,7 @@ const gameControl = (()=>{
 
             //Will include logic for MIN MAX Algorithm later on
             const getMove = ()=>{
-                let myMove;
-                // do {
-                    myMove = getCorrectMove()
-                // } while (gameBoard.moveIsLegal(myMove) == false)
+                let myMove = getCorrectMove()
                 gameBoard.getMove(myMove,"O")
                 computerMadeAMove(myMove)
             }
